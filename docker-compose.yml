@@ -1,0 +1,17 @@
+services:
+  filamentos:
+    build:
+      context: .
+      args:
+        WHATSAPP_NUMBER: ${WHATSAPP_NUMBER}
+        SHEET_CSV_URL: ${SHEET_CSV_URL:-}
+    image: gama3d-filamentos:latest
+    container_name: gama3d-filamentos
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "3010:3000"   # host:container — troque 3010 se já estiver em uso
+    volumes:
+      # Edite ./data/filamentos.csv no servidor: o site atualiza em até ~5 min
+      - ./data:/app/data:ro
+    mem_limit: 512m
